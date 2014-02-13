@@ -91,7 +91,7 @@ class RequirementChecker
             $this->password = $_COOKIE['password'];
         }
         $this->updateCookies();
-        if (!empty($this->hostname) && !empty($this->username) && !empty($this->password)) {
+        if (!empty($this->hostname) && !empty($this->username)) {
             try {
                 $this->dbh = new PDO("mysql:host=$this->hostname;", $this->username, $this->password);
                 $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
