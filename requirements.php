@@ -85,24 +85,32 @@ class RequirementChecker
             $this->hostname = $_POST['hostname'];
             $this->username = $_POST['username'];
             $this->password = $_POST['password'];
-            setcookie("hostname", $this->hostname, time() + 3600);
-            setcookie("username", $this->username, time() + 3600);
-            setcookie("password", $this->password, time() + 3600);
         } elseif (isset($_COOKIE['hostname']) && isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
             $this->hostname = $_COOKIE['hostname'];
             $this->username = $_COOKIE['username'];
             $this->password = $_COOKIE['password'];
-            setcookie("hostname", $this->hostname, time() + 3600);
-            setcookie("username", $this->username, time() + 3600);
-            setcookie("password", $this->password, time() + 3600);
         }
+        $this->updateCookies();
+        if (!empty($this->hostname) && !empty($this->username) && !empty($this->password)) {
+            try {
+                $this->dbh = new PDO("mysql:host=$this->hostname;", $this->username, $this->password);
+                $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                $this->dbh = $e->getMessage();
+            }
+        } else {
+            $this->dbh = 'No credentials provided';
+        }
+    }
 
-        try {
-            $this->dbh = new PDO("mysql:host=$this->hostname;", $this->username, $this->password);
-            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            $this->dbh = $e->getMessage();
-        }
+    /**
+     * Saves or update with new lifetime cookies for database access
+     */
+    public function updateCookies()
+    {
+        setcookie("hostname", $this->hostname, time() + 3600);
+        setcookie("username", $this->username, time() + 3600);
+        setcookie("password", $this->password, time() + 3600);
     }
 
     /**
