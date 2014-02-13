@@ -1,10 +1,15 @@
 <?php
-if (version_compare(PHP_VERSION, '4.3', '<')) {
-    echo 'At least PHP 4.3 is required to run this script!';
+/**
+ * Requirements checker base file.
+ */
+
+if (version_compare(PHP_VERSION, '5.0', '<')) {
+    echo 'At least PHP 5.0 is required to run this script!';
     exit(1);
 }
 
 /**
+ * RequirementChecker allows checking, if current system meets the requirements for running application.
  * Class RequirementChecker
  */
 class RequirementChecker
@@ -31,16 +36,15 @@ class RequirementChecker
      * use http://base64.ru/ for edit purposes
      * @var string
      */
-    public $webView = 'Pz4KPCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJ1dGYtOCIvPgogICAgPHRpdGxlPkFwcGxpY2F0aW9uIFJlcXVpcmVtZW50IENoZWNrZXI8L3RpdGxlPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSIvL25ldGRuYS5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjEuMC9jc3MvYm9vdHN0cmFwLm1pbi5jc3MiPgo8L2hlYWQ+Cjxib2R5Pgo8ZGl2IGNsYXNzPSJjb250YWluZXIiPgogICAgPGRpdiBjbGFzcz0iaGVhZGVyIj4KICAgICAgICA8aDE+QXBwbGljYXRpb24gUmVxdWlyZW1lbnQgQ2hlY2tlcjwvaDE+CiAgICA8L2Rpdj4KICAgIDxocj4KCiAgICA8ZGl2IGNsYXNzPSJjb250ZW50Ij4KICAgICAgICA8aDM+RGVzY3JpcHRpb248L2gzPgogICAgICAgIDxwPgogICAgICAgICAgICBUaGlzIHNjcmlwdCBjaGVja3MgaWYgdGhlIHNlcnZlciBpcyBydW5uaW5nIHRoZSByaWdodCB2ZXJzaW9uIG9mIFBIUCwKICAgICAgICAgICAgaWYgYXBwcm9wcmlhdGUgUEhQIGV4dGVuc2lvbnMgaGF2ZSBiZWVuIGxvYWRlZCwgYW5kIGlmIHBocC5pbmkgZmlsZSBzZXR0aW5ncyBhcmUgY29ycmVjdC4KICAgICAgICA8L3A+CiAgICAgICAgPHA+CiAgICAgICAgICAgIFRoZXJlIGFyZSB0d28ga2luZHMgb2YgcmVxdWlyZW1lbnRzIGJlaW5nIGNoZWNrZWQuIE1hbmRhdG9yeSByZXF1aXJlbWVudHMgYXJlIHRob3NlIHRoYXQgaGF2ZSB0byBiZSBtZXQKICAgICAgICAgICAgdG8gYWxsb3cgcHJvamVjdCB3b3JrIGFzIGV4cGVjdGVkLiBUaGVyZSBhcmUgYWxzbyBzb21lIG9wdGlvbmFsIHJlcXVpcmVtZW50cyBiZWVpbmcgY2hlY2tlZCB3aGljaCB3aWxsCiAgICAgICAgICAgIHNob3cgeW91IGEgd2FybmluZyB3aGVuIHRoZXkgZG8gbm90IG1lZXQuCiAgICAgICAgPC9wPgogICAgICAgIDxoMz5NeVNRTCBjaGVjazwvaDM+CiAgICAgICAgPD9waHAgaWYgKGlzX3N0cmluZygkdGhpcy0+ZGJoKSk6ID8+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImFsZXJ0IGFsZXJ0LWRhbmdlciI+CiAgICAgICAgICAgICAgICA8P3BocCBlY2hvICR0aGlzLT5kYmg7ID8+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgIDw/cGhwIGVuZGlmOyA/PgoKICAgICAgICA8P3BocCBpZiAoaXNfb2JqZWN0KCR0aGlzLT5kYmgpKTogPz4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtc3VjY2VzcyI+CiAgICAgICAgICAgICAgICA8c3Ryb25nPkNvbm5lY3Rpb24gZXN0YWJsaXNoZWQuPC9zdHJvbmc+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgIDw/cGhwIGVuZGlmOyA/PgogICAgICAgIDxmb3JtIGFjdGlvbj0iIiBjbGFzcz0iZm9ybS1pbmxpbmUiIHJvbGU9ImZvcm0iIG1ldGhvZD0icG9zdCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImZvcm0tZ3JvdXAiPgogICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzPSJzci1vbmx5IiBmb3I9Imhvc3RuYW1lIj5Ib3N0bmFtZTwvbGFiZWw+CiAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9ImZvcm0tY29udHJvbCIgaWQ9Imhvc3RuYW1lIiBuYW1lPSJob3N0bmFtZSIgcGxhY2Vob2xkZXI9IkVudGVyIGhvc3RuYW1lIgogICAgICAgICAgICAgICAgICAgICAgIHZhbHVlPSI8P3BocCBlY2hvICR0aGlzLT5ob3N0bmFtZTsgPz4iPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCI+CiAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9InNyLW9ubHkiIGZvcj0idXNlcm5hbWUiPlVzZXJuYW1lPC9sYWJlbD4KICAgICAgICAgICAgICAgIDxpbnB1dCBjbGFzcz0iZm9ybS1jb250cm9sIiBpZD0idXNlcm5hbWUiIG5hbWU9InVzZXJuYW1lIiBwbGFjZWhvbGRlcj0iVXNlcm5hbWUiCiAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9Ijw/cGhwIGVjaG8gJHRoaXMtPnVzZXJuYW1lOyA/PiI+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJmb3JtLWdyb3VwIj4KICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0ic3Itb25seSIgZm9yPSJwYXNzd29yZCI+UGFzc3dvcmQ8L2xhYmVsPgogICAgICAgICAgICAgICAgPGlucHV0IHR5cGU9InBhc3N3b3JkIiBjbGFzcz0iZm9ybS1jb250cm9sIiBpZD0icGFzc3dvcmQiIG5hbWU9InBhc3N3b3JkIiBwbGFjZWhvbGRlcj0iUGFzc3dvcmQiCiAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9Ijw/cGhwIGVjaG8gJHRoaXMtPnBhc3N3b3JkOyA/PiI+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8YnV0dG9uIHR5cGU9InN1Ym1pdCIgY2xhc3M9ImJ0biBidG4tZGVmYXVsdCI+Q2hlY2s8L2J1dHRvbj4KICAgICAgICA8L2Zvcm0+CiAgICAgICAgPGgzPkNvbmNsdXNpb248L2gzPgogICAgICAgIDw/cGhwIGlmICgkc3VtbWFyeVsnZXJyb3JzJ10gPiAwKTogPz4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtZXJyb3IiPgogICAgICAgICAgICAgICAgPHN0cm9uZz5VbmZvcnR1bmF0ZWx5IHlvdXIgc2VydmVyIGNvbmZpZ3VyYXRpb24gZG9lcyBub3Qgc2F0aXNmeSB0aGUgcmVxdWlyZW1lbnRzIGJ5IHRoaXMKICAgICAgICAgICAgICAgICAgICBhcHBsaWNhdGlvbi48YnI+UGxlYXNlIHJlZmVyIHRvIHRoZSB0YWJsZSBiZWxvdyBmb3IgZGV0YWlsZWQgZXhwbGFuYXRpb24uPC9zdHJvbmc+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgIDw/cGhwIGVsc2VpZiAoJHN1bW1hcnlbJ3dhcm5pbmdzJ10gPiAwKTogPz4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtaW5mbyI+CiAgICAgICAgICAgICAgICA8c3Ryb25nPllvdXIgc2VydmVyIGNvbmZpZ3VyYXRpb24gc2F0aXNmaWVzIHRoZSBtaW5pbXVtIHJlcXVpcmVtZW50cyBieSB0aGlzIGFwcGxpY2F0aW9uLjxicj5QbGVhc2UgcGF5CiAgICAgICAgICAgICAgICAgICAgYXR0ZW50aW9uIHRvIHRoZSB3YXJuaW5ncyBsaXN0ZWQgYmVsb3cgYW5kIGNoZWNrIGlmIHlvdXIgYXBwbGljYXRpb24gd2lsbCB1c2UgdGhlIGNvcnJlc3BvbmRpbmcKICAgICAgICAgICAgICAgICAgICBmZWF0dXJlcy48L3N0cm9uZz4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgPD9waHAKICAgICAgICBlbHNlOiA/PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJhbGVydCBhbGVydC1zdWNjZXNzIj4KICAgICAgICAgICAgICAgIDxzdHJvbmc+Q29uZ3JhdHVsYXRpb25zISBZb3VyIHNlcnZlciBjb25maWd1cmF0aW9uIHNhdGlzZmllcyBhbGwgcmVxdWlyZW1lbnRzLjwvc3Ryb25nPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICA8P3BocCBlbmRpZjsgPz4KICAgICAgICA8aDM+RGV0YWlsczwvaDM+CiAgICAgICAgPHRhYmxlIGNsYXNzPSJ0YWJsZSB0YWJsZS1ib3JkZXJlZCI+CiAgICAgICAgICAgIDx0cj4KICAgICAgICAgICAgICAgIDx0aD5OYW1lPC90aD4KICAgICAgICAgICAgICAgIDx0aD5SZXN1bHQ8L3RoPgogICAgICAgICAgICAgICAgPHRoPlZhbHVlPC90aD4KICAgICAgICAgICAgICAgIDx0aD5SZXF1aXJlZCBCeTwvdGg+CiAgICAgICAgICAgICAgICA8dGg+TWVtbzwvdGg+CiAgICAgICAgICAgIDwvdHI+CiAgICAgICAgICAgIDw/cGhwIGZvcmVhY2ggKCRyZXF1aXJlbWVudHMgYXMgJHJlcXVpcmVtZW50KTogPz4KICAgICAgICAgICAgICAgIDx0ciBjbGFzcz0iPD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ2NvbmRpdGlvbiddID8gJ3N1Y2Nlc3MnIDogKCRyZXF1aXJlbWVudFsnbWFuZGF0b3J5J10gPyAnZXJyb3InIDogJ3dhcm5pbmcnKSA/PiI+CiAgICAgICAgICAgICAgICAgICAgPHRkPgogICAgICAgICAgICAgICAgICAgICAgICA8P3BocCBlY2hvICRyZXF1aXJlbWVudFsnbmFtZSddOyA/PgogICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgPHRkPgogICAgICAgICAgICAgICAgICAgICAgICA8c3BhbgogICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3M9InJlc3VsdCI+PD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ2NvbmRpdGlvbiddID8gJ1Bhc3NlZCcgOiAoJHJlcXVpcmVtZW50WydtYW5kYXRvcnknXSA/ICdGYWlsZWQnIDogJ1dhcm5pbmcnKSA/Pjwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAgIDx0ZD4KICAgICAgICAgICAgICAgICAgICAgICAgPD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ3ZhbHVlJ107ID8+CiAgICAgICAgICAgICAgICAgICAgPC90ZD4KICAgICAgICAgICAgICAgICAgICA8dGQ+CiAgICAgICAgICAgICAgICAgICAgICAgIDw/cGhwIGVjaG8gJHJlcXVpcmVtZW50WydieSddOyA/PgogICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgPHRkPgogICAgICAgICAgICAgICAgICAgICAgICA8P3BocCBlY2hvICRyZXF1aXJlbWVudFsnbWVtbyddOyA/PgogICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICA8L3RyPgogICAgICAgICAgICA8P3BocCBlbmRmb3JlYWNoOyA/PgogICAgICAgIDwvdGFibGU+CiAgICA8L2Rpdj4KICAgIDxocj4KICAgIDxkaXYgY2xhc3M9ImZvb3RlciI+CiAgICAgICAgPHA+U2VydmVyOiA8P3BocCBlY2hvICR0aGlzLT5nZXRTZXJ2ZXJJbmZvKCkgLiAnICcgLiAkdGhpcy0+Z2V0Tm93RGF0ZSgpID8+PC9wPgogICAgICAgIDxwPkJhc2VkIG9uIDxhCiAgICAgICAgICAgICAgICBocmVmPSJodHRwczovL2dpdGh1Yi5jb20veWlpc29mdC95aWkyLWZyYW1ld29yay9ibG9iL21hc3Rlci9yZXF1aXJlbWVudHMvWWlpUmVxdWlyZW1lbnRDaGVja2VyLnBocCIKICAgICAgICAgICAgICAgIHJlbD0iZXh0ZXJuYWwiPllpaVJlcXVpcmVtZW50Q2hlY2tlcjwvYT48L3A+CiAgICA8L2Rpdj4KPC9kaXY+CjwvYm9keT4KPC9odG1sPgo=';
+    private $webView = 'Pz4KPCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJ1dGYtOCIvPgogICAgPHRpdGxlPkFwcGxpY2F0aW9uIFJlcXVpcmVtZW50IENoZWNrZXI8L3RpdGxlPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSIvL25ldGRuYS5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjEuMC9jc3MvYm9vdHN0cmFwLm1pbi5jc3MiPgo8L2hlYWQ+Cjxib2R5Pgo8ZGl2IGNsYXNzPSJjb250YWluZXIiPgogICAgPGRpdiBjbGFzcz0iaGVhZGVyIj4KICAgICAgICA8aDE+QXBwbGljYXRpb24gUmVxdWlyZW1lbnQgQ2hlY2tlcjwvaDE+CiAgICA8L2Rpdj4KICAgIDxocj4KCiAgICA8ZGl2IGNsYXNzPSJjb250ZW50Ij4KICAgICAgICA8aDM+RGVzY3JpcHRpb248L2gzPgogICAgICAgIDxwPgogICAgICAgICAgICBUaGlzIHNjcmlwdCBjaGVja3MgaWYgdGhlIHNlcnZlciBpcyBydW5uaW5nIHRoZSByaWdodCB2ZXJzaW9uIG9mIFBIUCwKICAgICAgICAgICAgaWYgYXBwcm9wcmlhdGUgUEhQIGV4dGVuc2lvbnMgaGF2ZSBiZWVuIGxvYWRlZCwgYW5kIGlmIHBocC5pbmkgZmlsZSBzZXR0aW5ncyBhcmUgY29ycmVjdC4KICAgICAgICA8L3A+CiAgICAgICAgPHA+CiAgICAgICAgICAgIFRoZXJlIGFyZSB0d28ga2luZHMgb2YgcmVxdWlyZW1lbnRzIGJlaW5nIGNoZWNrZWQuIE1hbmRhdG9yeSByZXF1aXJlbWVudHMgYXJlIHRob3NlIHRoYXQgaGF2ZSB0byBiZSBtZXQKICAgICAgICAgICAgdG8gYWxsb3cgcHJvamVjdCB3b3JrIGFzIGV4cGVjdGVkLiBUaGVyZSBhcmUgYWxzbyBzb21lIG9wdGlvbmFsIHJlcXVpcmVtZW50cyBiZWVpbmcgY2hlY2tlZCB3aGljaCB3aWxsCiAgICAgICAgICAgIHNob3cgeW91IGEgd2FybmluZyB3aGVuIHRoZXkgZG8gbm90IG1lZXQuCiAgICAgICAgPC9wPgogICAgICAgIDxoMz5NeVNRTCBjaGVjazwvaDM+CiAgICAgICAgPD9waHAgaWYgKGlzX3N0cmluZygkdGhpcy0+ZGJoKSk6ID8+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImFsZXJ0IGFsZXJ0LWRhbmdlciI+CiAgICAgICAgICAgICAgICA8P3BocCBlY2hvICR0aGlzLT5kYmg7ID8+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgIDw/cGhwIGVuZGlmOyA/PgoKICAgICAgICA8P3BocCBpZiAoaXNfb2JqZWN0KCR0aGlzLT5kYmgpKTogPz4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtc3VjY2VzcyI+CiAgICAgICAgICAgICAgICA8c3Ryb25nPkNvbm5lY3Rpb24gZXN0YWJsaXNoZWQuPC9zdHJvbmc+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgIDw/cGhwIGVuZGlmOyA/PgogICAgICAgIDxmb3JtIGFjdGlvbj0iIiBjbGFzcz0iZm9ybS1pbmxpbmUiIHJvbGU9ImZvcm0iIG1ldGhvZD0icG9zdCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImZvcm0tZ3JvdXAiPgogICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzPSJzci1vbmx5IiBmb3I9Imhvc3RuYW1lIj5Ib3N0bmFtZTwvbGFiZWw+CiAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9ImZvcm0tY29udHJvbCIgaWQ9Imhvc3RuYW1lIiBuYW1lPSJob3N0bmFtZSIgcGxhY2Vob2xkZXI9IkVudGVyIGhvc3RuYW1lIgogICAgICAgICAgICAgICAgICAgICAgIHZhbHVlPSI8P3BocCBlY2hvICR0aGlzLT5ob3N0bmFtZTsgPz4iPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCI+CiAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9InNyLW9ubHkiIGZvcj0idXNlcm5hbWUiPlVzZXJuYW1lPC9sYWJlbD4KICAgICAgICAgICAgICAgIDxpbnB1dCBjbGFzcz0iZm9ybS1jb250cm9sIiBpZD0idXNlcm5hbWUiIG5hbWU9InVzZXJuYW1lIiBwbGFjZWhvbGRlcj0iVXNlcm5hbWUiCiAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9Ijw/cGhwIGVjaG8gJHRoaXMtPnVzZXJuYW1lOyA/PiI+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJmb3JtLWdyb3VwIj4KICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0ic3Itb25seSIgZm9yPSJwYXNzd29yZCI+UGFzc3dvcmQ8L2xhYmVsPgogICAgICAgICAgICAgICAgPGlucHV0IHR5cGU9InBhc3N3b3JkIiBjbGFzcz0iZm9ybS1jb250cm9sIiBpZD0icGFzc3dvcmQiIG5hbWU9InBhc3N3b3JkIiBwbGFjZWhvbGRlcj0iUGFzc3dvcmQiCiAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9Ijw/cGhwIGVjaG8gJHRoaXMtPnBhc3N3b3JkOyA/PiI+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8YnV0dG9uIHR5cGU9InN1Ym1pdCIgY2xhc3M9ImJ0biBidG4tZGVmYXVsdCI+Q2hlY2s8L2J1dHRvbj4KICAgICAgICA8L2Zvcm0+CiAgICAgICAgPGgzPkNvbmNsdXNpb248L2gzPgogICAgICAgIDw/cGhwIGlmICgkc3VtbWFyeVsnZXJyb3JzJ10gPiAwKTogPz4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtZXJyb3IiPgogICAgICAgICAgICAgICAgPHN0cm9uZz5VbmZvcnR1bmF0ZWx5IHlvdXIgc2VydmVyIGNvbmZpZ3VyYXRpb24gZG9lcyBub3Qgc2F0aXNmeSB0aGUgcmVxdWlyZW1lbnRzIGJ5IHRoaXMKICAgICAgICAgICAgICAgICAgICBhcHBsaWNhdGlvbi48YnI+UGxlYXNlIHJlZmVyIHRvIHRoZSB0YWJsZSBiZWxvdyBmb3IgZGV0YWlsZWQgZXhwbGFuYXRpb24uPC9zdHJvbmc+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgIDw/cGhwIGVsc2VpZiAoJHN1bW1hcnlbJ3dhcm5pbmdzJ10gPiAwKTogPz4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtaW5mbyI+CiAgICAgICAgICAgICAgICA8c3Ryb25nPllvdXIgc2VydmVyIGNvbmZpZ3VyYXRpb24gc2F0aXNmaWVzIHRoZSBtaW5pbXVtIHJlcXVpcmVtZW50cyBieSB0aGlzIGFwcGxpY2F0aW9uLjxicj5QbGVhc2UgcGF5CiAgICAgICAgICAgICAgICAgICAgYXR0ZW50aW9uIHRvIHRoZSB3YXJuaW5ncyBsaXN0ZWQgYmVsb3cgYW5kIGNoZWNrIGlmIHlvdXIgYXBwbGljYXRpb24gd2lsbCB1c2UgdGhlIGNvcnJlc3BvbmRpbmcKICAgICAgICAgICAgICAgICAgICBmZWF0dXJlcy48L3N0cm9uZz4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgPD9waHAKICAgICAgICBlbHNlOiA/PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJhbGVydCBhbGVydC1zdWNjZXNzIj4KICAgICAgICAgICAgICAgIDxzdHJvbmc+Q29uZ3JhdHVsYXRpb25zISBZb3VyIHNlcnZlciBjb25maWd1cmF0aW9uIHNhdGlzZmllcyBhbGwgcmVxdWlyZW1lbnRzLjwvc3Ryb25nPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICA8P3BocCBlbmRpZjsgPz4KICAgICAgICA8aDM+RGV0YWlsczwvaDM+CiAgICAgICAgPHRhYmxlIGNsYXNzPSJ0YWJsZSB0YWJsZS1ib3JkZXJlZCI+CiAgICAgICAgICAgIDx0cj4KICAgICAgICAgICAgICAgIDx0aD5OYW1lPC90aD4KICAgICAgICAgICAgICAgIDx0aD5SZXN1bHQ8L3RoPgogICAgICAgICAgICAgICAgPHRoPlZhbHVlPC90aD4KICAgICAgICAgICAgICAgIDx0aD5SZXF1aXJlZCBCeTwvdGg+CiAgICAgICAgICAgICAgICA8dGg+TWVtbzwvdGg+CiAgICAgICAgICAgIDwvdHI+CiAgICAgICAgICAgIDw/cGhwIGZvcmVhY2ggKCRyZXF1aXJlbWVudHMgYXMgJHJlcXVpcmVtZW50KTogPz4KICAgICAgICAgICAgICAgIDx0ciBjbGFzcz0iPD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ2NvbmRpdGlvbiddID8gJ3N1Y2Nlc3MnIDogKCRyZXF1aXJlbWVudFsnbWFuZGF0b3J5J10gPyAnZXJyb3InIDogJ3dhcm5pbmcnKSA/PiI+CiAgICAgICAgICAgICAgICAgICAgPHRkPgogICAgICAgICAgICAgICAgICAgICAgICA8P3BocCBlY2hvICRyZXF1aXJlbWVudFsnbmFtZSddOyA/PgogICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgPHRkPgogICAgICAgICAgICAgICAgICAgICAgICA8c3BhbgogICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3M9InJlc3VsdCI+PD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ2NvbmRpdGlvbiddID8gJ1Bhc3NlZCcgOiAoJHJlcXVpcmVtZW50WydtYW5kYXRvcnknXSA/ICdGYWlsZWQnIDogJ1dhcm5pbmcnKSA/Pjwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAgIDx0ZD4KICAgICAgICAgICAgICAgICAgICAgICAgPD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ3ZhbHVlJ107ID8+CiAgICAgICAgICAgICAgICAgICAgPC90ZD4KICAgICAgICAgICAgICAgICAgICA8dGQ+CiAgICAgICAgICAgICAgICAgICAgICAgIDw/cGhwIGVjaG8gJHJlcXVpcmVtZW50WydieSddOyA/PgogICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgPHRkPgogICAgICAgICAgICAgICAgICAgICAgICA8P3BocCBlY2hvICRyZXF1aXJlbWVudFsnbWVtbyddOyA/PgogICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICA8L3RyPgogICAgICAgICAgICA8P3BocCBlbmRmb3JlYWNoOyA/PgogICAgICAgIDwvdGFibGU+CiAgICA8L2Rpdj4KICAgIDxocj4KICAgIDxkaXYgY2xhc3M9ImZvb3RlciI+CiAgICAgICAgPHA+U2VydmVyOiA8P3BocCBlY2hvICR0aGlzLT5nZXRTZXJ2ZXJJbmZvKCkgLiAnICcgLiAkdGhpcy0+Z2V0Tm93RGF0ZSgpID8+PC9wPgogICAgICAgIDxwPkJhc2VkIG9uIDxhCiAgICAgICAgICAgICAgICBocmVmPSJodHRwczovL2dpdGh1Yi5jb20veWlpc29mdC95aWkyLWZyYW1ld29yay9ibG9iL21hc3Rlci9yZXF1aXJlbWVudHMvWWlpUmVxdWlyZW1lbnRDaGVja2VyLnBocCIKICAgICAgICAgICAgICAgIHJlbD0iZXh0ZXJuYWwiPllpaVJlcXVpcmVtZW50Q2hlY2tlcjwvYT48L3A+CiAgICA8L2Rpdj4KPC9kaXY+CjwvYm9keT4KPC9odG1sPgo=';
 
     /**
      * Check the given requirements, collecting results into internal field.
      * This method can be invoked several times checking different requirement sets.
      * Use [[render()]] to get the results.
      *
-     * @return static self instance.
      */
-    function check()
+    public function check()
     {
         self::initDB();
         if (!isset($this->result) || !is_array($this->result)) {
@@ -73,13 +77,13 @@ class RequirementChecker
             }
             $this->result['requirements'][] = $requirement;
         }
-        return $this;
+        $this->render();
     }
 
     /**
      * Connects to mysql for further checks
      */
-    public function initDB()
+    private function initDB()
     {
         if (isset($_POST['hostname']) && isset($_POST['username']) && isset($_POST['password'])) {
             $this->hostname = $_POST['hostname'];
@@ -108,7 +112,7 @@ class RequirementChecker
     /**
      * Saves or update with new lifetime cookies for database access
      */
-    public function updateCookies()
+    private function updateCookies()
     {
         setcookie("hostname", $this->hostname, time() + 3600);
         setcookie("username", $this->username, time() + 3600);
@@ -119,7 +123,7 @@ class RequirementChecker
      * Renders the requirements check result.
      * The output will vary depending is a script running from web or from console.
      */
-    function render()
+    private function render()
     {
         if (!isset($this->result)) {
             $this->usageError('Nothing to render!');
@@ -132,7 +136,7 @@ class RequirementChecker
      *
      * @return bool|string
      */
-    public function getMysqlVariable($variable)
+    private function getMysqlVariable($variable)
     {
         if (is_object($this->dbh)) {
             $query = $this->dbh->prepare("SHOW VARIABLES LIKE :variable");
@@ -155,7 +159,7 @@ class RequirementChecker
      *
      * @return boolean if PHP extension version matches.
      */
-    function checkPhpExtensionVersion($extensionName, $version, $compare = '>=')
+    private function checkPhpExtensionVersion($extensionName, $version, $compare = '>=')
     {
         if (!extension_loaded($extensionName)) {
             return false;
@@ -177,7 +181,7 @@ class RequirementChecker
      *
      * @return boolean option is on.
      */
-    function checkPhpIniOn($name)
+    private function checkPhpIniOn($name)
     {
         $value = ini_get($name);
         if (empty($value)) {
@@ -193,7 +197,7 @@ class RequirementChecker
      *
      * @return boolean option is off.
      */
-    function checkPhpIniOff($name)
+    private function checkPhpIniOff($name)
     {
         $value = ini_get($name);
         if (empty($value)) {
@@ -212,7 +216,7 @@ class RequirementChecker
      *
      * @return boolean comparison result.
      */
-    function compareByteSize($a, $b, $compare = '>=')
+    private function compareByteSize($a, $b, $compare = '>=')
     {
         $compareExpression = '(' . $this->getByteSize($a) . $compare . $this->getByteSize($b) . ')';
         return $this->evaluateExpression($compareExpression);
@@ -226,7 +230,7 @@ class RequirementChecker
      *
      * @return integer actual size in bytes.
      */
-    function getByteSize($verboseSize)
+    private function getByteSize($verboseSize)
     {
         if (empty($verboseSize)) {
             return 0;
@@ -263,7 +267,7 @@ class RequirementChecker
      *
      * @return boolean success.
      */
-    function checkUploadMaxFileSize($min = null, $max = null)
+    private function checkUploadMaxFileSize($min = null, $max = null)
     {
         $postMaxSize = ini_get('post_max_size');
         $uploadMaxFileSize = ini_get('upload_max_filesize');
@@ -290,7 +294,7 @@ class RequirementChecker
      *
      * @return string the rendering result. Null if the rendering result is not required.
      */
-    function renderViewFile($_data_ = null)
+    private function renderViewFile($_data_ = null)
     {
         // we use special variable names here to avoid conflict when extracting data
         if (is_array($_data_)) {
@@ -312,7 +316,7 @@ class RequirementChecker
      *
      * @return array normalized requirement.
      */
-    function normalizeRequirement($requirement, $requirementKey = 0)
+    private function normalizeRequirement($requirement, $requirementKey = 0)
     {
         if (!is_array($requirement)) {
             $this->usageError('Requirement must be an array!');
@@ -354,7 +358,7 @@ class RequirementChecker
      *
      * @param string $message the error message
      */
-    function usageError($message)
+    private function usageError($message)
     {
         echo "Error: $message\n\n";
         exit(1);
@@ -367,7 +371,7 @@ class RequirementChecker
      *
      * @return mixed the expression result.
      */
-    function evaluateExpression($expression)
+    private function evaluateExpression($expression)
     {
         return eval('return ' . $expression . ';');
     }
@@ -376,7 +380,7 @@ class RequirementChecker
      * Returns the server information.
      * @return string server information.
      */
-    function getServerInfo()
+    private function getServerInfo()
     {
         $info = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
         return $info;
@@ -386,7 +390,7 @@ class RequirementChecker
      * Returns the now date if possible in string representation.
      * @return string now date.
      */
-    function getNowDate()
+    private function getNowDate()
     {
         $nowDate = @strftime('%Y-%m-%d %H:%M', time());
         return $nowDate;
@@ -572,4 +576,4 @@ class RequirementChecker
 
 
 $requirementsChecker = new RequirementChecker();
-$requirementsChecker->check()->render();
+$requirementsChecker->check();
