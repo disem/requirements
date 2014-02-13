@@ -93,8 +93,10 @@ class RequirementChecker
         $this->updateCookies();
         if (!empty($this->hostname) && !empty($this->username)) {
             try {
-                $this->dbh = new PDO("mysql:host=$this->hostname;", $this->username, $this->password);
-                $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $this->dbh = new PDO("mysql:host=$this->hostname;", $this->username, $this->password, array(
+                    PDO::ATTR_TIMEOUT => "3",
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                ));
             } catch (PDOException $e) {
                 $this->dbh = $e->getMessage();
             }
