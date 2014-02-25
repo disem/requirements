@@ -32,17 +32,7 @@ class RequirementChecker
     public $password;
 
     /**
-     * base64 representation of web/index.php with minified css included
-     * use http://base64.ru/ for edit purposes
-     * @var string
-     */
-    private $webView = 'Pz48IURPQ1RZUEUgaHRtbD48aHRtbCBsYW5nPSJlbiI+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiLz48dGl0bGU+QXBwbGljYXRpb24gUmVxdWlyZW1lbnQgQ2hlY2tlcjwvdGl0bGU+PGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSIvL25ldGRuYS5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjEuMC9jc3MvYm9vdHN0cmFwLm1pbi5jc3MiPjwvaGVhZD48Ym9keT48ZGl2IGNsYXNzPSJjb250YWluZXIiPjxkaXYgY2xhc3M9ImhlYWRlciI+PGgxPkFwcGxpY2F0aW9uIFJlcXVpcmVtZW50IENoZWNrZXI8L2gxPjwvZGl2Pjxocj48ZGl2IGNsYXNzPSJjb250ZW50Ij48aDM+RGVzY3JpcHRpb248L2gzPjxwPiBUaGlzIHNjcmlwdCBjaGVja3MgaWYgdGhlIHNlcnZlciBpcyBydW5uaW5nIHRoZSByaWdodCB2ZXJzaW9uIG9mIFBIUCwgaWYgYXBwcm9wcmlhdGUgUEhQIGV4dGVuc2lvbnMgaGF2ZSBiZWVuIGxvYWRlZCwgYW5kIGlmIHBocC5pbmkgZmlsZSBzZXR0aW5ncyBhcmUgY29ycmVjdC4gPC9wPjxwPiBUaGVyZSBhcmUgdHdvIGtpbmRzIG9mIHJlcXVpcmVtZW50cyBiZWluZyBjaGVja2VkLiBNYW5kYXRvcnkgcmVxdWlyZW1lbnRzIGFyZSB0aG9zZSB0aGF0IGhhdmUgdG8gYmUgbWV0IHRvIGFsbG93IHByb2plY3Qgd29yayBhcyBleHBlY3RlZC4gVGhlcmUgYXJlIGFsc28gc29tZSBvcHRpb25hbCByZXF1aXJlbWVudHMgYmVlaW5nIGNoZWNrZWQgd2hpY2ggd2lsbCBzaG93IHlvdSBhIHdhcm5pbmcgd2hlbiB0aGV5IGRvIG5vdCBtZWV0LiA8L3A+PGgzPk15U1FMIGNoZWNrPC9oMz48P3BocCBpZihpc19zdHJpbmcoJHRoaXMtPmRiaCkpOj8+PGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtZGFuZ2VyIj48P3BocCBlY2hvICR0aGlzLT5kYmg7Pz48L2Rpdj48P3BocCBlbmRpZjs/Pjw/cGhwIGlmKGlzX29iamVjdCgkdGhpcy0+ZGJoKSk6Pz48ZGl2IGNsYXNzPSJhbGVydCBhbGVydC1zdWNjZXNzIj48c3Ryb25nPkNvbm5lY3Rpb24gZXN0YWJsaXNoZWQuPC9zdHJvbmc+PC9kaXY+PD9waHAgZW5kaWY7Pz48Zm9ybSBhY3Rpb249IiIgY2xhc3M9ImZvcm0taW5saW5lIiByb2xlPSJmb3JtIiBtZXRob2Q9InBvc3QiPjxkaXYgY2xhc3M9ImZvcm0tZ3JvdXAiPjxsYWJlbCBjbGFzcz0ic3Itb25seSIgZm9yPSJob3N0bmFtZSI+SG9zdG5hbWU8L2xhYmVsPjxpbnB1dCBjbGFzcz0iZm9ybS1jb250cm9sIiBpZD0iaG9zdG5hbWUiIG5hbWU9Imhvc3RuYW1lIiBwbGFjZWhvbGRlcj0iRW50ZXIgaG9zdG5hbWUiIHZhbHVlPSI8P3BocCBlY2hvICR0aGlzLT5ob3N0bmFtZTs/PiI+PC9kaXY+PGRpdiBjbGFzcz0iZm9ybS1ncm91cCI+PGxhYmVsIGNsYXNzPSJzci1vbmx5IiBmb3I9InVzZXJuYW1lIj5Vc2VybmFtZTwvbGFiZWw+PGlucHV0IGNsYXNzPSJmb3JtLWNvbnRyb2wiIGlkPSJ1c2VybmFtZSIgbmFtZT0idXNlcm5hbWUiIHBsYWNlaG9sZGVyPSJVc2VybmFtZSIgdmFsdWU9Ijw/cGhwIGVjaG8gJHRoaXMtPnVzZXJuYW1lOz8+Ij48L2Rpdj48ZGl2IGNsYXNzPSJmb3JtLWdyb3VwIj48bGFiZWwgY2xhc3M9InNyLW9ubHkiIGZvcj0icGFzc3dvcmQiPlBhc3N3b3JkPC9sYWJlbD48aW5wdXQgdHlwZT0icGFzc3dvcmQiIGNsYXNzPSJmb3JtLWNvbnRyb2wiIGlkPSJwYXNzd29yZCIgbmFtZT0icGFzc3dvcmQiIHBsYWNlaG9sZGVyPSJQYXNzd29yZCIgdmFsdWU9Ijw/cGhwIGVjaG8gJHRoaXMtPnBhc3N3b3JkOz8+Ij48L2Rpdj48YnV0dG9uIHR5cGU9InN1Ym1pdCIgY2xhc3M9ImJ0biBidG4tZGVmYXVsdCI+Q2hlY2s8L2J1dHRvbj48L2Zvcm0+PGgzPkNvbmNsdXNpb248L2gzPjw/cGhwIGlmKCRzdW1tYXJ5WydlcnJvcnMnXT4wKTo/PjxkaXYgY2xhc3M9ImFsZXJ0IGFsZXJ0LWVycm9yIj48c3Ryb25nPlVuZm9ydHVuYXRlbHkgeW91ciBzZXJ2ZXIgY29uZmlndXJhdGlvbiBkb2VzIG5vdCBzYXRpc2Z5IHRoZSByZXF1aXJlbWVudHMgYnkgdGhpcyBhcHBsaWNhdGlvbi48YnI+UGxlYXNlIHJlZmVyIHRvIHRoZSB0YWJsZSBiZWxvdyBmb3IgZGV0YWlsZWQgZXhwbGFuYXRpb24uPC9zdHJvbmc+PC9kaXY+PD9waHAgZWxzZWlmKCRzdW1tYXJ5Wyd3YXJuaW5ncyddPjApOj8+PGRpdiBjbGFzcz0iYWxlcnQgYWxlcnQtaW5mbyI+PHN0cm9uZz5Zb3VyIHNlcnZlciBjb25maWd1cmF0aW9uIHNhdGlzZmllcyB0aGUgbWluaW11bSByZXF1aXJlbWVudHMgYnkgdGhpcyBhcHBsaWNhdGlvbi48YnI+UGxlYXNlIHBheSBhdHRlbnRpb24gdG8gdGhlIHdhcm5pbmdzIGxpc3RlZCBiZWxvdyBhbmQgY2hlY2sgaWYgeW91ciBhcHBsaWNhdGlvbiB3aWxsIHVzZSB0aGUgY29ycmVzcG9uZGluZyBmZWF0dXJlcy48L3N0cm9uZz48L2Rpdj48P3BocAogZWxzZTo/PjxkaXYgY2xhc3M9ImFsZXJ0IGFsZXJ0LXN1Y2Nlc3MiPjxzdHJvbmc+Q29uZ3JhdHVsYXRpb25zISBZb3VyIHNlcnZlciBjb25maWd1cmF0aW9uIHNhdGlzZmllcyBhbGwgcmVxdWlyZW1lbnRzLjwvc3Ryb25nPjwvZGl2Pjw/cGhwIGVuZGlmOz8+PGgzPkRldGFpbHM8L2gzPjx0YWJsZSBjbGFzcz0idGFibGUgdGFibGUtYm9yZGVyZWQiPjx0cj48dGg+TmFtZTwvdGg+PHRoPlJlc3VsdDwvdGg+PHRoPlZhbHVlPC90aD48dGg+UmVxdWlyZWQgQnk8L3RoPjx0aD5NZW1vPC90aD48L3RyPjw/cGhwIGZvcmVhY2goJHJlcXVpcmVtZW50cyBhcyAkcmVxdWlyZW1lbnQpOj8+PHRyIGNsYXNzPSI8P3BocCBlY2hvICRyZXF1aXJlbWVudFsnY29uZGl0aW9uJ10/J3N1Y2Nlc3MnOigkcmVxdWlyZW1lbnRbJ21hbmRhdG9yeSddPydlcnJvcic6J3dhcm5pbmcnKT8+Ij48dGQ+PD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ25hbWUnXTs/PjwvdGQ+PHRkPjxzcGFuIGNsYXNzPSJyZXN1bHQiPjw/cGhwIGVjaG8gJHJlcXVpcmVtZW50Wydjb25kaXRpb24nXT8nUGFzc2VkJzooJHJlcXVpcmVtZW50WydtYW5kYXRvcnknXT8nRmFpbGVkJzonV2FybmluZycpPz48L3NwYW4+PC90ZD48dGQ+PD9waHAgZWNobyAkcmVxdWlyZW1lbnRbJ3ZhbHVlJ107Pz48L3RkPjx0ZD48P3BocCBlY2hvICRyZXF1aXJlbWVudFsnYnknXTs/PjwvdGQ+PHRkPjw/cGhwIGVjaG8gJHJlcXVpcmVtZW50WydtZW1vJ107Pz48L3RkPjwvdHI+PD9waHAgZW5kZm9yZWFjaDs/PjwvdGFibGU+PC9kaXY+PGhyPjxkaXYgY2xhc3M9ImZvb3RlciI+PHA+U2VydmVyOiA8P3BocCBlY2hvICR0aGlzLT5nZXRTZXJ2ZXJJbmZvKCkuJyAnLiR0aGlzLT5nZXROb3dEYXRlKCk/PjwvcD48cD5CYXNlZCBvbiA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20veWlpc29mdC95aWkyLWZyYW1ld29yay9ibG9iL21hc3Rlci9yZXF1aXJlbWVudHMvWWlpUmVxdWlyZW1lbnRDaGVja2VyLnBocCIgcmVsPSJleHRlcm5hbCI+WWlpUmVxdWlyZW1lbnRDaGVja2VyPC9hPjwvcD48L2Rpdj48L2Rpdj48L2JvZHk+PC9odG1sPiA=';
-
-    /**
-     * Check the given requirements, collecting results into internal field.
-     * This method can be invoked several times checking different requirement sets.
-     * Use [[render()]] to get the results.
-     *
+     * Check the given requirements, collecting results into internal field and rendering result.
      */
     public function check()
     {
@@ -128,7 +118,7 @@ class RequirementChecker
         if (!isset($this->result)) {
             $this->usageError('Nothing to render!');
         }
-        $this->renderViewFile($this->result);
+        $this->renderOutput($this->result);
     }
 
     /**
@@ -154,8 +144,8 @@ class RequirementChecker
      * Checks if the given PHP extension is available and its version matches the given one.
      *
      * @param string $extensionName PHP extension name.
-     * @param string $version       required PHP extension version.
-     * @param string $compare       comparison operator, by default '>='
+     * @param string $version required PHP extension version.
+     * @param string $compare comparison operator, by default '>='
      *
      * @return boolean if PHP extension version matches.
      */
@@ -210,8 +200,8 @@ class RequirementChecker
      * Compare byte sizes of values given in the verbose representation,
      * like '5M', '15K' etc.
      *
-     * @param string $a       first value.
-     * @param string $b       second value.
+     * @param string $a first value.
+     * @param string $b second value.
      * @param string $compare comparison operator, by default '>='.
      *
      * @return boolean comparison result.
@@ -286,33 +276,118 @@ class RequirementChecker
     }
 
     /**
-     * Renders a view file.
-     * This method includes the view file as a PHP script
-     * and captures the display result if required.
-     *
+     * Renders output.
      * @param array $_data_ data to be extracted and made available to the view file
-     *
-     * @return string the rendering result. Null if the rendering result is not required.
      */
-    private function renderViewFile($_data_ = null)
+    private function renderOutput($_data_ = null)
     {
-        // we use special variable names here to avoid conflict when extracting data
-        if (is_array($_data_)) {
-            extract($_data_, EXTR_PREFIX_SAME, 'data');
-        } else {
-            $data = $_data_;
-        }
-        //@debug
-        //require(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'index.php');
-        eval(base64_decode($this->webView));
+        $summary = '';
+        $requirements = '';
+        extract($_data_, EXTR_PREFIX_SAME, 'data');
+        ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <title>Application Requirement Checker</title>
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+        </head>
+        <body>
+        <div class="container">
+            <div class="header">
+                <h1>Application Requirement Checker</h1>
+            </div>
+            <hr>
+            <div class="content">
+                <h3>Description</h3>
 
+                <p>This script checks if the server is running the right version of PHP, if appropriate PHP extensions
+                    have been loaded, and if php.ini file settings are correct. </p>
+
+                <p> There are two kinds of requirements being checked. Mandatory requirements are those that have to be
+                    met to allow project work as expected. There are also some optional requirements beeing checked
+                    which will show you a warning when they do not meet. </p>
+
+                <h3>MySQL check</h3>
+                <?php if (is_string($this->dbh)): ?>
+                    <div class="alert alert-danger">
+                        <?php echo $this->dbh; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (is_object($this->dbh)): ?>
+                    <div class="alert alert-success">
+                        <strong>Connection established.</strong>
+                    </div>
+                <?php endif; ?>
+                <form action="" class="form-inline" role="form" method="post">
+                    <div class="form-group">
+                        <label class="sr-only" for="hostname">Hostname</label>
+                        <input class="form-control" id="hostname" name="hostname" placeholder="Hostname"
+                               value="<?php echo $this->hostname; ?>">
+                    </div>
+                    <div class="form-group"><label class="sr-only" for="username">Username</label><input
+                            class="form-control" id="username" name="username" placeholder="Username"
+                            value="<?php echo $this->username; ?>"></div>
+                    <div class="form-group"><label class="sr-only" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                               value="<?php echo $this->password; ?>">
+                    </div>
+                    <button type="submit" class="btn btn-default">Check</button>
+                </form>
+                <h3>Conclusion</h3>
+                <?php if ($summary['errors'] > 0): ?>
+                    <div class="alert alert-error">
+                        <strong>Unfortunately your server configuration does not satisfy the requirements by this
+                            application.<br>Please refer to the table below for detailed explanation.
+                        </strong>
+                    </div>
+                <?php elseif ($summary['warnings'] > 0): ?>
+                    <div class="alert alert-info">
+                        <strong>Your server configuration satisfies the minimum requirements by this application.
+                            <br>Please pay attention to the warnings listed below and check if your application will use
+                            the corresponding features.</strong>
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-success">
+                        <strong>Congratulations! Your server configuration satisfies all requirements.</strong>
+                    </div>
+                <?php endif; ?>
+                <h3>Details</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th>Result</th>
+                        <th>Value</th>
+                        <th>Required By</th>
+                        <th>Memo</th>
+                    </tr>
+                    <?php foreach ($requirements as $requirement): ?>
+                    <tr class="<?php echo $requirement['condition'] ? 'success' : ($requirement['mandatory'] ? 'error' : 'warning') ?>">
+                        <td><?php echo $requirement['name']; ?></td>
+                        <td><span
+                                class="result"><?php echo $requirement['condition'] ? 'Passed' : ($requirement['mandatory'] ? 'Failed' : 'Warning') ?></span>
+                        </td>
+                        <td><?php echo $requirement['value']; ?></td>
+                        <td><?php echo $requirement['by']; ?></td>
+                        <td><?php echo $requirement['memo']; ?></td>
+                        </tr><?php endforeach; ?>
+                </table>
+            </div>
+            <hr>
+            <div class="footer">
+                <p>Server: <?php echo $this->getServerInfo() . ' ' . $this->getNowDate() ?></p>
+            </div>
+        </div>
+        </body>
+        </html>
+    <?php
     }
 
     /**
      * Normalizes requirement ensuring it has correct format.
      *
-     * @param array $requirement    raw requirement.
-     * @param int   $requirementKey requirement key in the list.
+     * @param array $requirement raw requirement.
+     * @param int $requirementKey requirement key in the list.
      *
      * @return array normalized requirement.
      */
@@ -450,16 +525,17 @@ class RequirementChecker
                 'condition' => $this->checkPhpExtensionVersion('intl', '1.0.2', '>='),
                 'by' => '<a href="http://www.php.net/manual/en/book.intl.php">Internationalization</a> support',
                 'memo' => 'PHP Intl extension 1.0.2 or higher is required when you want to use advanced parameters formatting
-		in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr>-feature of
-		<code>EmailValidator</code> or <code>UrlValidator</code> or the <code>yii\i18n\Formatter</code> class.'
+in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr>-feature of
+<code>EmailValidator</code> or <code>UrlValidator</code> or the <code>yii\i18n\Formatter</code> class.'
             ),
             array(
                 'name' => 'DOM extension',
                 'mandatory' => true,
                 'condition' => class_exists('DOMDocument', false),
-                'by' => '<a href="http://www.yiiframework.com/doc/api/CHtmlPurifier">CHtmlPurifier</a>, <a href="http://www.yiiframework.com/doc/api/CWsdlGenerator">CWsdlGenerator</a>',
+                'by' => '<a href="http://www.yiiframework.com/doc/api/CHtmlPurifier">CHtmlPurifier</a>, <a
+    href="http://www.yiiframework.com/doc/api/CWsdlGenerator">CWsdlGenerator</a>',
             ),
-            // Database :
+// Database :
             array(
                 'name' => 'PDO extension',
                 'mandatory' => true,
@@ -473,15 +549,17 @@ class RequirementChecker
                 'by' => 'All <a href="http://www.yiiframework.com/doc/api/#system.db">DB-related classes</a>',
                 'memo' => 'Required for MySQL database.',
             ),
-            // Cache:
+// Cache:
             array(
                 'name' => 'Memcache extension',
                 'mandatory' => false,
                 'condition' => extension_loaded('memcache') || extension_loaded('memcached'),
                 'by' => '<a href="http://www.yiiframework.com/doc/api/CMemCache">CMemCache</a>',
-                'memo' => extension_loaded('memcached') ? 'To use memcached set <a href="http://www.yiiframework.com/doc/api/CMemCache#useMemcached-detail">CMemCache::useMemcached</a> to <code>true</code>.' : ''
+                'memo' => extension_loaded('memcached') ? 'To use memcached set <a
+    href="http://www.yiiframework.com/doc/api/CMemCache#useMemcached-detail">CMemCache::useMemcached</a> to
+<code>true</code>.' : ''
             ),
-            // Crypt
+// Crypt
             array(
                 'name' => 'Mcrypt extension',
                 'mandatory' => false,
@@ -489,7 +567,7 @@ class RequirementChecker
                 'by' => '<a href="http://www.yiiframework.com/doc/api/CSecurityManager">CSecurityManager</a>',
                 'memo' => 'Required by encrypt and decrypt methods.'
             ),
-            // PHP extensions
+// PHP extensions
             array(
                 'name' => 'Mbstring extension',
                 'mandatory' => false,
@@ -511,7 +589,7 @@ class RequirementChecker
                 'by' => 'XML parsing',
                 'memo' => 'Required if application parses XML.'
             ),
-            // PHP ini
+// PHP ini
             'phpSmtp' => array(
                 'name' => 'PHP mail SMTP',
                 'mandatory' => false,
