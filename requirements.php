@@ -267,7 +267,6 @@ class RequirementChecker
             $minCheckResult = true;
         }
         if ($max !== null) {
-            var_dump($postMaxSize, $uploadMaxFileSize, $max);
             $maxCheckResult = $this->compareByteSize($postMaxSize, $max, '<=') && $this->compareByteSize($uploadMaxFileSize, $max, '<=');
         } else {
             $maxCheckResult = true;
@@ -277,13 +276,10 @@ class RequirementChecker
 
     /**
      * Renders output.
-     * @param array $_data_ data to be extracted and made available to the view file
+     * @param array $result
      */
-    private function renderOutput($_data_ = null)
+    private function renderOutput($result)
     {
-        $summary = '';
-        $requirements = '';
-        extract($_data_, EXTR_PREFIX_SAME, 'data');
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -335,13 +331,13 @@ class RequirementChecker
                     <button type="submit" class="btn btn-default">Check</button>
                 </form>
                 <h3>Conclusion</h3>
-                <?php if ($summary['errors'] > 0): ?>
+                <?php if ($result['summary']['errors'] > 0): ?>
                     <div class="alert alert-error">
                         <strong>Unfortunately your server configuration does not satisfy the requirements by this
                             application.<br>Please refer to the table below for detailed explanation.
                         </strong>
                     </div>
-                <?php elseif ($summary['warnings'] > 0): ?>
+                <?php elseif ($result['summary']['warnings'] > 0): ?>
                     <div class="alert alert-info">
                         <strong>Your server configuration satisfies the minimum requirements by this application.
                             <br>Please pay attention to the warnings listed below and check if your application will use
@@ -361,7 +357,7 @@ class RequirementChecker
                         <th>Required By</th>
                         <th>Memo</th>
                     </tr>
-                    <?php foreach ($requirements as $requirement): ?>
+                    <?php foreach ($result['requirements'] as $requirement): ?>
                     <tr class="<?php echo $requirement['condition'] ? 'success' : ($requirement['mandatory'] ? 'error' : 'warning') ?>">
                         <td><?php echo $requirement['name']; ?></td>
                         <td><span
@@ -535,7 +531,6 @@ in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr
                 'by' => '<a href="http://www.yiiframework.com/doc/api/CHtmlPurifier">CHtmlPurifier</a>, <a
     href="http://www.yiiframework.com/doc/api/CWsdlGenerator">CWsdlGenerator</a>',
             ),
-// Database :
             array(
                 'name' => 'PDO extension',
                 'mandatory' => true,
@@ -549,7 +544,6 @@ in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr
                 'by' => 'All <a href="http://www.yiiframework.com/doc/api/#system.db">DB-related classes</a>',
                 'memo' => 'Required for MySQL database.',
             ),
-// Cache:
             array(
                 'name' => 'Memcache extension',
                 'mandatory' => false,
@@ -559,7 +553,6 @@ in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr
     href="http://www.yiiframework.com/doc/api/CMemCache#useMemcached-detail">CMemCache::useMemcached</a> to
 <code>true</code>.' : ''
             ),
-// Crypt
             array(
                 'name' => 'Mcrypt extension',
                 'mandatory' => false,
@@ -567,7 +560,6 @@ in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr
                 'by' => '<a href="http://www.yiiframework.com/doc/api/CSecurityManager">CSecurityManager</a>',
                 'memo' => 'Required by encrypt and decrypt methods.'
             ),
-// PHP extensions
             array(
                 'name' => 'Mbstring extension',
                 'mandatory' => false,
@@ -589,7 +581,6 @@ in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr
                 'by' => 'XML parsing',
                 'memo' => 'Required if application parses XML.'
             ),
-// PHP ini
             'phpSmtp' => array(
                 'name' => 'PHP mail SMTP',
                 'mandatory' => false,
@@ -674,7 +665,6 @@ in <code>Yii::t()</code>, <abbr title="Internationalized domain names">IDN</abbr
         );
     }
 }
-
 
 $requirementsChecker = new RequirementChecker();
 $requirementsChecker->check();
